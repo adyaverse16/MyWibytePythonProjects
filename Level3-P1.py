@@ -81,3 +81,31 @@ for choice in user_choices:
 
 ##Removing the last 'and' from the query
 query = query[0:-4:1]
+
+##Using the query to pull out preferred rackets
+if query == '':
+    selected_rackets = [racket for racket in rackets_list]
+else:
+    selected_rackets = [racket for racket in rackets_list if eval(query)]
+
+##Displaying the selected rackets in a formatted manner
+characters = 0
+print(len(selected_rackets), ' rackets met your preferences.')
+print()
+for kk in features:
+  print(Fore.CYAN + kk, end = '')
+  characters = len(kk)
+  print((16 - characters)*' ', end = '')
+
+print()
+
+characters = 0
+
+for racket in selected_rackets:
+  for kk in racket:
+    print(racket[kk],  end = '')
+    characters = len(racket[kk])
+    print((16- characters)*' ', end = '')
+  print()
+
+#BASIC DONE - BONUS TBD
