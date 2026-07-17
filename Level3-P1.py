@@ -7,6 +7,7 @@
 ##Importing
 import random
 import pyfiglet
+import time
 from colorama import init, Fore
 init(autoreset = True)
 
@@ -50,7 +51,24 @@ master_dict['Weights'] = ['270g', '280g', '290g' , '300g', '310g', '320g']
 master_dict['Lengths'] = ['21 in', '23 in', '25 in', '26 in' , '27 in']
 master_dict['Grip Sizes'] = ['4.0 in', '4.25 in' , '4.5 in', '4.625 in']
 master_dict['String Patterns'] = ['16x19', '18x20', '16x18', '16x20']
-master_dict['Prices'] = ['INR 8000', 'INR 10,000', 'INR 12,000', 'INR 15,000', 'INR 20,000', 'INR 25,000']
+master_dict['Prices'] = ['INR 8000', 'INR 10000', 'INR 12000', 'INR 15000', 'INR 20000', 'INR 25000']
+
+##Creating brand-model mapping
+models = dict.fromkeys(master_dict['Brands'])
+
+models['Babolat'] = ['UltraLITE', 'Aspire', 'AeroBoost', 'Inferno' ]
+models['Wilson'] = ['ProSpeed', 'Turbo', 'Blade', 'InspirePRO']
+models['HEAD'] = ['StormX', 'VelocityLITE', 'Sonic', 'Strike']
+models['Yonex'] = ['BlastPro', 'AlphaX', 'Percept', 'PureSpin']
+
+##Creating brand-color mappinh
+colors = dict.fromkeys(master_dict['Brands'])
+
+colors['Babolat'] = ['Neon Yellow', 'Magenta', 'Metallic Blue', 'Silver']
+colors['Wilson'] = ['Green', 'Black', 'White', 'Blue']
+colors['HEAD'] = ['Lilac', 'Pastel Blue', 'Mint Green', 'Orange']
+colors['Yonex'] = ['Light Pink', 'Cream', 'Indigo', 'Red']
+
 
 ##Creating final inventory of rackets
 rackets_list = []
@@ -60,15 +78,30 @@ for _ in range(rackets_num):
     new_racket = dict.fromkeys(features)
     ###Populating values for the specific laptop randomly
     for feature in new_racket:
-        new_racket[feature] = random.choice(master_dict[feature + 's'])
+        if feature != 'Model':
+            if feature!= 'Color':
+                new_racket[feature] = random.choice(master_dict[feature + 's'])
+    new_racket['Model'] = random.choice(models[new_racket['Brand']])
+    new_racket['Color'] = random.choice(colors[new_racket['Brand']])
     rackets_list.append(new_racket)
 
 #PART 3  - DISPLAYING CUSTOMIZED CATALOGUE OF RACKETS
 
 ##Recieving user's choice
+time.sleep(1)
 user_choices = dict.fromkeys(features)
 for feature in features:
-    user_choices[feature] = input(Fore.CYAN + "Any preference for " + feature + " (Enter none for no preference)\n" + Fore.RESET)
+    if feature != 'Model':
+        if feature != 'Color':
+            pref_str = '/'.join(master_dict[feature+'s'])
+        else:
+            pref_str = '/'.join(colors[user_choices['Brand']])
+    else:
+        pref_str = '/'.join(models[user_choices['Brand']])
+
+        
+
+    user_choices[feature] = input(Fore.CYAN + "Any preference for " + feature + ' : ' + pref_str + " (Enter none for no preference)\n" + Fore.RESET)
 
 ##Creating the query
 query = ''
@@ -90,12 +123,19 @@ else:
 
 ##Displaying the selected rackets in a formatted manner
 characters = 0
+print()
+print(Fore.CYAN + '-----------------------------------------------------------')
+print()
+time.sleep(1)
 print(len(selected_rackets), ' rackets met your preferences.')
 print()
-for kk in features:
-  print(Fore.CYAN + kk, end = '')
-  characters = len(kk)
-  print((16 - characters)*' ', end = '')
+time.sleep(1)
+if len(selected_rackets) != 0:
+        
+    for kk in features:
+        print(Fore.CYAN + kk, end = '')
+        characters = len(kk)
+        print((16 - characters)*' ', end = '')
 
 print()
 
@@ -108,4 +148,5 @@ for racket in selected_rackets:
     print((16- characters)*' ', end = '')
   print()
 
-#BASIC DONE - BONUS TBD
+#The enddddd!
+#Byeeeee!
